@@ -65,3 +65,24 @@ for i, match in enumerate(matches, start=1):
     print(f"   Texto: '{match.context}'")
     print(f"   Problema: {match.message}")
     print(f"   Recomendación: {match.replacements[0] if match.replacements else 'No disponible'}")
+from flask import Flask, request, render_template
+import language_tool_python
+
+app = Flask(__name__)
+
+tool = language_tool_python.LanguageTool('es', remote_server='https://api.languagetool.org')
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    errores = []
+    texto = ''
+    if request.method == 'POST':
+        texto = request.form['texto']
+        matches = tool.check(texto)
+        for m in matches:
+            errores.append({
+                'mensaje': m.message,
+                'contexto': m.context,
+                'sugerencia': m.replacements[0] if m.replacements else 'No disponible'
+            })
+    return render_template('index.html', errores=errores, texto=texto)
