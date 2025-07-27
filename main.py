@@ -59,4 +59,9 @@ def home():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
+matches = tool.check(texto)
+for i, match in enumerate(matches, start=1):
+    print(f"🔸 Error {i}:")
+    print(f"   Texto: '{match.context}'")
+    print(f"   Problema: {match.message}")
+    print(f"   Recomendación: {match.replacements[0] if match.replacements else 'No disponible'}")
