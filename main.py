@@ -52,7 +52,7 @@ def home():
     errores = []
     if request.method == "POST":
         texto = request.form.get("texto", "")
-        tool = language_tool_python.LanguageTool('es')
+        tool = language_tool_python.LanguageTool('es', remote_server='https://api.languagetool.org')
         matches = tool.check(texto)
         errores = [match.message for match in matches]
     return render_template("index.html", texto=texto, errores=errores)
