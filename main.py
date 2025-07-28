@@ -1,6 +1,11 @@
 import language_tool_python
 
 def revisar_texto(texto):
+    errores.append({
+    'mensaje': m.message,
+    'contexto': m.context,
+    'sugerencia': m.replacements[0] if m.replacements else 'No disponible'
+})
     tool = language_tool_python.LanguageTool('es')
     errores = tool.check(texto)
 
