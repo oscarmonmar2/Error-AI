@@ -15,9 +15,9 @@ def index():
 
         for match in matches:
             errores.append({
-                "contexto": match.context,
-                "mensaje": match.message,
-                "recomendacion": match.replacements
+                "Problema": match.context,
+                "Texto": match.message,
+                "Sugerencia": match.replacements
             })
 
     return render_template("index.html", errores=errores, texto=texto_original)
